@@ -100,8 +100,11 @@ function symbolPressed(e){
             }
             currNum= "";
             if (symbol==='=') {
-                operator = e.target.textContent;
                 operator=""
+            }
+            else{
+                operator = symbol;
+
             }
             updateMainNum(currNum)
             updatePrevNum(prevNum,operator)
