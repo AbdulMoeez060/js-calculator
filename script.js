@@ -81,7 +81,7 @@ function symbolPressed(e){
             updateMainNum(currNum)
             updatePrevNum(prevNum,operator)
         }
-        if (prevNum !=="" && currNum ==="") {
+        if (prevNum !=="" && currNum ==="" && symbol!=='=') {
             operator = symbol;
             updatePrevNum(prevNum,operator)
         }
