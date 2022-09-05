@@ -18,7 +18,8 @@ body{
     display: flex;
 }
 .flex2{
-    width: 160px;
+    /* width: 160px; */
+    flex: 2;
 }
 button{
     font-size: 2rem;
