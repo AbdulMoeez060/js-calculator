@@ -11,6 +11,8 @@ const symbols = document.querySelectorAll('[data-symbol]');
 
 document.addEventListener('keydown',getNum)
 document.addEventListener('keydown',delDigit)
+document.addEventListener('keydown',symbolPressed)
+
 
 
 digits.forEach(digit => {
@@ -54,39 +56,49 @@ function delDigit(e){
 }
 
 function symbolPressed(e){
+    if((e instanceof KeyboardEvent && (e.key==='-'||e.key==='+'||e.key==='*'||e.key==='/'||e.key==='='))||e instanceof PointerEvent){
 
-    if (prevNum === "" && e.target.textContent !=='=') {
-        prevNum = currNum;
-        operator = e.target.textContent;
-        currNum= "";
-        updateMainNum(currNum)
-        updatePrevNum(prevNum,operator)
+        var symbol = ''
+        if (e instanceof KeyboardEvent) {
+            symbol = e.key;
+        }else{
+            symbol = e.target.textContent
+        }
+
+        if (prevNum === "" && symbol !=='=') {
+            prevNum = currNum;
+            operator = symbol;
+            currNum= "";
+            updateMainNum(currNum)
+            updatePrevNum(prevNum,operator)
+        }
+        if (prevNum !=="" && currNum ==="") {
+            operator = symbol;
+            updatePrevNum(prevNum,operator)
+        }
+        if (prevNum !=="" && currNum !=="" && operator !== "") {
+            if (operator ==='+') {
+                prevNum = add(prevNum,currNum);
+            }
+            if (operator==='-') {
+                prevNum = subtract(prevNum,currNum);
+            }
+            if (operator==='*') {
+                prevNum = multiply(prevNum,currNum);
+            }
+            if (operator==='/') {
+                prevNum = divide(prevNum,currNum);
+            }
+            currNum= "";
+            if (symbol==='=') {
+                operator = e.target.textContent;
+                operator=""
+            }
+            updateMainNum(currNum)
+            updatePrevNum(prevNum,operator)
+        }
     }
-    if (prevNum !=="" && currNum ==="") {
-        operator = e.target.textContent;
-        updatePrevNum(prevNum,operator)
-    }
-    if (prevNum !=="" && currNum !=="" && operator !== "") {
-        if (operator ==='+') {
-            prevNum = add(prevNum,currNum);
-        }
-        if (operator==='-') {
-            prevNum = subtract(prevNum,currNum);
-        }
-        if (operator==='*') {
-            prevNum = multiply(prevNum,currNum);
-        }
-        if (operator==='/') {
-            prevNum = divide(prevNum,currNum);
-        }
-        currNum= "";
-        if (e.target.textContent) {
-            operator = e.target.textContent;
-            operator=""
-        }
-        updateMainNum(currNum)
-        updatePrevNum(prevNum,operator)
-    }
+
 }
 
 function updatePrevNum(prev,op){
