@@ -1,8 +1,11 @@
 var currNum="",prevNum="",operator="";
 
 const digits = document.querySelectorAll('[data-num]')
-const mainNum = document.querySelector('.lower');
+const mainDis = document.querySelector('.lower');
+const prevDis = document.querySelector('.upper');
 const del = document.querySelector('[data-del]');
+const symbols = document.querySelectorAll('[data-symbol]');
+
 
 
 
@@ -13,6 +16,10 @@ document.addEventListener('keydown',delDigit)
 digits.forEach(digit => {
     digit.addEventListener('click',getNum)
 
+})
+
+symbols.forEach(sym=>{
+    sym.addEventListener('click',symbolPressed);
 })
 
 del.addEventListener('click',delDigit);
@@ -30,7 +37,7 @@ function getNum(e){
 }
 
 function updateMainNum(newNum){
-    mainNum.textContent = newNum;
+    mainDis.textContent = newNum;
 }
 
 function delDigit(e){
@@ -41,4 +48,18 @@ function delDigit(e){
             
         }
     }
+}
+
+function symbolPressed(e){
+    if (prevNum === "") {
+        prevNum = currNum;
+        operator = e.target.textContent;
+        currNum= "";
+        updateMainNum(currNum)
+        updatePrevNum(prevNum,operator)
+    }
+}
+
+function updatePrevNum(prev,op){
+    prevDis.textContent = `${prev}${op}`;
 }
