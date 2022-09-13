@@ -1,2 +1,2 @@
-# js-calculator
+# Calculater
 A simple Calculator made using HTML, CSS and JavaScript
